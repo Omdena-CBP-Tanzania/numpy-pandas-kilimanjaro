@@ -7,7 +7,9 @@ def create_1d_array():
     Returns:
         numpy.ndarray: 1D array
     """
-    pass
+    # done by Abubakar
+    return np.array([1,2,3,4,5])
+
 
 def create_2d_array():
     """
