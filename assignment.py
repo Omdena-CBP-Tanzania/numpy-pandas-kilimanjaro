@@ -61,10 +61,10 @@ def handle_missing_values(df):
     print(df.isna().sum())
 
     # Fill missing values in 'Age' with the mean age
-    df['Age'].fillna(df['Age'].mean(), inplace=True)
+    df['Age'] = df['Age'].fillna(df['Age'].mean())
 
     # Fill missing values in 'Salary' with the median salary
-    df['Salary'].fillna(df['Salary'].median(), inplace=True)
+    df['Salary'] = df['Salary'].fillna(df['Salary'].median())
 
 
     return df
