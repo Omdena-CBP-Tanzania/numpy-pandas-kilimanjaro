@@ -26,6 +26,12 @@ def array_operations(arr):
     Returns:
         tuple: (mean, std_dev, max_value)
     """
+    arr = np.array(arr)
+    mean_value = np.mean(arr)
+    std_dev_value = np.std(arr)
+    max_value = np.max(arr)
+
+    return mean_value, std_dev_value, max_value
     pass
 
 def read_csv_file(filepath):
