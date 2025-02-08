@@ -56,7 +56,9 @@ def select_data(df):
     Returns:
         pandas.DataFrame: Selected data
     """
-    pass
+    # By Abubakar
+    selected_df=df.loc[:5,["Name","Age","Salary"]]
+    return selected_df
 
 def rename_columns(df):
     """
