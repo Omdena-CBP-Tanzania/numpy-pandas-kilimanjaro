@@ -11,16 +11,35 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4  # Check out the repository code
-    - name: test_assignment.py
+
+    - name: Run Tests (test_assignment.py)
       id: test_assignment-py
       uses: classroom-resources/autograding-python-grader@v1
       with:
         timeout: 10  # Timeout for tests (in seconds)
         max-score: 100  # Maximum score for the assignment
         setup-command: pip install numpy pandas pytest  # Install required dependencies
+
+    - name: Preprocess Test Results
+      id: preprocess-results
+      run: |
+        # Parse the raw results from the previous step
+        RAW_RESULTS=${{steps.test_assignment-py.outputs.result}}
+        
+        # Convert the JSON string to a Python dictionary and round the totalPoints
+        echo "$RAW_RESULTS" | python3 -c '
+        import sys, json
+        data = json.load(sys.stdin)
+        data["totalPoints"] = round(data.get("totalPoints", 0), 2)  # Round to 2 decimal places
+        print(json.dumps(data))
+        ' > processed_results.json
+        
+        # Output the processed results as an environment variable
+        echo "PROCESSED_RESULTS=$(cat processed_results.json)" >> $GITHUB_ENV
+
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
       env:
-        TEST_ASSIGNMENT-PY_RESULTS: "${{steps.test_assignment-py.outputs.result}}"  # Pass test results
+        TEST_ASSIGNMENT-PY_RESULTS: ${{ env.PROCESSED_RESULTS }}  # Pass the preprocessed results
       with:
         runners: test_assignment-py  # Specify the test runner
