@@ -1,13 +1,16 @@
 import numpy as np
 import pandas as pd
 
+
 def create_1d_array():
     """
     Create a 1D NumPy array with values [1, 2, 3, 4, 5]
     Returns:
         numpy.ndarray: 1D array
     """
-    pass
+    # done by Abubakar
+    return np.array([1, 2, 3, 4, 5])
+
 
 def create_2d_array():
     """
@@ -15,7 +18,8 @@ def create_2d_array():
     Returns:
         numpy.ndarray: 2D array
     """
-    pass
+    return np.arange(1, 10).reshape(3, 3)
+
 
 def array_operations(arr):
     """
@@ -26,7 +30,13 @@ def array_operations(arr):
     Returns:
         tuple: (mean, std_dev, max_value)
     """
-    pass
+    arr = np.array(arr)
+    mean_value = np.mean(arr)
+    std_dev_value = np.std(arr)
+    max_value = np.max(arr)
+
+    return mean_value, std_dev_value, max_value
+
 
 def read_csv_file(filepath):
     """
@@ -36,7 +46,8 @@ def read_csv_file(filepath):
     Returns:
         pandas.DataFrame: Loaded dataframe
     """
-    pass
+    return pd.read_csv(filepath)
+
 
 def handle_missing_values(df):
     """
@@ -46,7 +57,18 @@ def handle_missing_values(df):
     Returns:
         pandas.DataFrame: Cleaned dataframe
     """
-    pass
+    print("Number of missing values:")
+    print(df.isna().sum())
+
+    # Fill missing values in 'Age' with the mean age
+    df['Age'] = df['Age'].fillna(df['Age'].mean())
+
+    # Fill missing values in 'Salary' with the median salary
+    df['Salary'] = df['Salary'].fillna(df['Salary'].median())
+
+
+    return df
+
 
 def select_data(df):
     """
@@ -54,7 +76,10 @@ def select_data(df):
     Returns:
         pandas.DataFrame: Selected data
     """
-    pass
+    # By Abubakar
+    selected_df = df.loc[:5, ["Name", "Age", "Salary"]]
+    return selected_df
+
 
 def rename_columns(df):
     """
@@ -62,4 +87,5 @@ def rename_columns(df):
     Returns:
         pandas.DataFrame: DataFrame with renamed columns
     """
-    pass
+    df_renamed = df.rename(columns={'Name': 'First Name', 'Age': 'Years', 'Salary': 'Income'})
+    return df_renamed
